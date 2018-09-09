@@ -22,6 +22,7 @@
 
         if (winW >= devW) {
           docEl.style.fontSize = '100px';
+          return;
         }
         docEl.style.fontSize = winW / devW * 100 + 'px';
       }
