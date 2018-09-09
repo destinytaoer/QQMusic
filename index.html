@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>QQ音乐</title>
+  <link rel="stylesheet" href="css/reset.min.css">
+
+  <!-- DEV -->
+  <link rel="stylesheet/less" href="css/index.less">
+  <script src="js/less-2.5.3.min.js"></script>
+
+  <script src="js/prefixfree.min.js"></script>
+  <script>
+    ~function (window) {
+      let computedRem = function () {
+        var docEl = document.documentElement,
+          winW = docEl.clientWidth,
+          devW = 640;
+
+        if (winW >= devW) {
+          docEl.style.fontSize = '100px';
+        }
+        docEl.style.fontSize = winW / devW * 100 + 'px';
+      }
+      computedRem();
+      window.addEventListener('resize', computedRem);
+    }(window);
+  </script>
+</head>
+
+<body>
+  <main class="mainBox">
+    <!-- BG-IMG -->
+    <img src="img/myDream.jpg" alt="" class="bgImg">
+    <div class="bgMask"></div>
+
+    <!-- AUDIO -->
+    <audio class="musicAudio" src="audio/myDream.m4a" preload="none"></audio>
+    <audio class="musicAudio" src="audio/aDiao.m4a" preload="none"></audio>
+
+    <header class="headerBox">
+      <img src="img/myDream.jpg" class="pic" alt="">
+      <div class="title">
+      </div>
+      <a href="javascript:;" class="playBtn"></a>
+    </header>
+
+    <section class="contentBox">
+      <div class="wrapper">
+      </div>
+    </section>
+
+    <footer class="footerBox">
+      <div class="progressBox">
+        <span class="already">00:00</span>
+        <div class="progress">
+          <div class="current"></div>
+        </div>
+        <span class="duration">00:00</span>
+      </div>
+      <a href="javascript:;" class="download">下载这首音乐</a>
+    </footer>
+  </main>
+  <script src="js/zepto.min.js"></script>
+  <script src="js/index.js"></script>
+</body>
+
+</html>
