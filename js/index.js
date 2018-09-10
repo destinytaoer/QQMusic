@@ -99,6 +99,7 @@ let musicRender = (function () {
     // 加载完毕可以播放了
     $musicAudio[index].addEventListener('canplay', function () {
       let duration = $musicAudio[index].duration;
+      $already.html('00:00');
       $duration.html(computedTime(duration));
       $playBtn.tap(() => {
         $plan.fire(index);
@@ -179,6 +180,7 @@ let musicRender = (function () {
     // 初始化
     $current.css('width', '0');
     translateY = 0;
+    $wrapper.css('transform', `translateY(${translateY}px)`);
 
     let promise = queryLyric('json/lyric2.json');
     promise.then(formatData)
