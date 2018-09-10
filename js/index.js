@@ -93,35 +93,34 @@ let musicRender = (function () {
   //=> 基于发布订阅来规划能够播放时要做的事情
   let play = function play(index) {
     let $plan = $.Callbacks();
-    $musicAudio[index].play();
+
+    $musicAudio[index].load();
+
     // 加载完毕可以播放了
     $musicAudio[index].addEventListener('canplay', function () {
-      $plan.fire(index);
+      let duration = $musicAudio[index].duration;
+      $duration.html(computedTime(duration));
+      $playBtn.tap(() => {
+        $plan.fire(index);
+      });
     });
 
-    //=> 控制暂停播放，以及播放按钮显示
+    //=> 控制播放按钮显示
     $plan.add((index) => {
       //=> 不能使用 show，因为 show 还会添加一些属性，导致动画效果改变
-      $playBtn.css('display', 'block');
-      $playBtn.addClass('move');
-
-      $playBtn.tap(() => {
-        if ($musicAudio[index].paused) {
-          $musicAudio[index].play();
-          $playBtn.addClass('move');
-          return;
-        }
-        $musicAudio[index].pause();
-        $playBtn.removeClass('move');
-      })
+      if ($musicAudio[index].paused) {
+        $musicAudio[index].play();
+        $playBtn.addClass('move');
+        return;
+      }
+      $musicAudio[index].pause();
+      $playBtn.removeClass('move');
     });
 
     //=> 控制进度条
     let autoTimer = null;
     $plan.add((index) => {
       let duration = $musicAudio[index].duration;
-      $duration.html(computedTime(duration));
-
       // 监听播放状态
       autoTimer = setInterval(() => {
         let currentTime = $musicAudio[index].currentTime;
@@ -180,7 +179,7 @@ let musicRender = (function () {
     // 初始化
     $current.css('width', '0');
     translateY = 0;
-    
+
     let promise = queryLyric('json/lyric2.json');
     promise.then(formatData)
       .then(bindHTML)
@@ -193,8 +192,7 @@ let musicRender = (function () {
     init: function () {
       let promise = queryLyric('json/lyric.json');
       promise.then(formatData)
-        .then(bindHTML)
-        .then(function () {
+        .then(bindHTML).then(function () {
           play(0);
         });
     }
